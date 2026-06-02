@@ -160,6 +160,20 @@
             font-size: 1.3rem;
         }
 
+        .unit-image {
+            width: 100%;
+            height: 200px;
+            background: #f0f0f0;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            object-fit: cover;
+            display: none;
+        }
+
+        .unit-image.show {
+            display: block;
+        }
+
         .unit-specs {
             background: #f0f0f0;
             padding: 1rem;
@@ -217,6 +231,23 @@
             font-weight: bold;
         }
 
+        .inquiry-btn {
+            background: #28a745;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            width: 100%;
+            transition: background 0.3s;
+            margin-top: 1rem;
+        }
+
+        .inquiry-btn:hover {
+            background: #218838;
+        }
+
         .contact-section {
             background: #1e3c72;
             color: white;
@@ -255,6 +286,7 @@
             margin-top: 3rem;
         }
 
+        /* Modal Styles */
         .modal {
             display: none;
             position: fixed;
@@ -264,56 +296,92 @@
             width: 100%;
             height: 100%;
             background-color: rgba(0,0,0,0.5);
+            overflow-y: auto;
+        }
+
+        .modal.active {
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         .modal-content {
             background-color: white;
-            margin: 5% auto;
             padding: 2rem;
-            border: 1px solid #888;
             border-radius: 10px;
             width: 90%;
-            max-width: 500px;
+            max-width: 600px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            max-height: 90vh;
+            overflow-y: auto;
+            margin: auto;
         }
 
-        .close {
+        .close-btn {
             color: #aaa;
             float: right;
             font-size: 1.5rem;
             font-weight: bold;
             cursor: pointer;
+            transition: color 0.3s;
         }
 
-        .close:hover {
+        .close-btn:hover {
             color: black;
         }
 
         .modal h2 {
             color: #1e3c72;
             margin-bottom: 1rem;
+            margin-right: 2rem;
         }
 
-        .modal-form input,
-        .modal-form textarea {
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: #555;
+        }
+
+        .form-group input,
+        .form-group textarea {
             width: 100%;
             padding: 0.8rem;
-            margin: 0.5rem 0 1rem 0;
             border: 1px solid #ddd;
             border-radius: 5px;
             font-family: inherit;
+            font-size: 0.95rem;
         }
 
-        .modal-form button {
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #ff6b6b;
+            box-shadow: 0 0 5px rgba(255, 107, 107, 0.3);
+        }
+
+        .submit-btn {
             background: #ff6b6b;
             color: white;
-            padding: 0.8rem 1.5rem;
+            padding: 0.8rem 2rem;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             font-size: 1rem;
+            width: 100%;
+            transition: background 0.3s;
         }
 
-        .modal-form button:hover {
+        .submit-btn:hover {
             background: #ee5a52;
         }
 
@@ -336,6 +404,24 @@
             color: #856404;
         }
 
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 1rem;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 1rem;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
         @media (max-width: 768px) {
             .header-container {
                 flex-direction: column;
@@ -352,6 +438,10 @@
 
             .units-grid {
                 grid-template-columns: 1fr;
+            }
+
+            .modal-content {
+                width: 95%;
             }
         }
     </style>
@@ -392,7 +482,7 @@
         <section id="units">
             <h2 style="text-align: center; color: #1e3c72; margin: 2rem 0;">Available Storage Units</h2>
             <div class="units-grid" id="unitsGrid">
-                <!-- Units will be loaded here from storage.json -->
+                <!-- Units will be loaded here -->
             </div>
         </section>
     </div>
@@ -412,7 +502,7 @@
                 </div>
                 <div class="contact-item">
                     <h4>✉️ Email</h4>
-                    <p><a href="mailto:info@kemahstorage.com" style="color: white;">info@kemahstorage.com</a></p>
+                    <p><a href="mailto:Kclarkgroup@gmail.com" style="color: white;">Kclarkgroup@gmail.com</a></p>
                 </div>
             </div>
         </div>
@@ -422,7 +512,43 @@
         <p>&copy; 2024 Kemah Storage Units. All rights reserved. | 1250 Winfield Ln, Kemah, TX</p>
     </footer>
 
+    <!-- Inquiry Modal -->
+    <div class="modal" id="inquiryModal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <h2>Inquiry for <span id="unitName"></span></h2>
+            <div class="success-message" id="successMessage"></div>
+            <div class="error-message" id="errorMessage"></div>
+            <form id="inquiryForm" onsubmit="submitInquiry(event)">
+                <div class="form-group">
+                    <label for="fullName">Full Name *</label>
+                    <input type="text" id="fullName" name="fullName" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email *</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone Number *</label>
+                    <input type="tel" id="phone" name="phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="moveDate">Expected Move-In Date</label>
+                    <input type="date" id="moveDate" name="moveDate">
+                </div>
+                <div class="form-group">
+                    <label for="message">Message / Additional Details</label>
+                    <textarea id="message" name="message" placeholder="Tell us more about your storage needs..."></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Send Inquiry</button>
+            </form>
+        </div>
+    </div>
+
     <script>
+        let selectedUnitId = null;
+        const FORMSPREE_ID = 'xyzwplnw'; // Replace with your actual Formspree form ID
+
         // Load storage units from JSON data
         function loadUnits() {
             const unitsData = {
@@ -434,7 +560,8 @@
                         containerSize: "30-40 ft",
                         features: ["Private Fence", "Access Code", "Ground Level", "Easy Loading"],
                         status: "available",
-                        price: null
+                        price: null,
+                        photo: null
                     },
                     {
                         id: 2,
@@ -443,7 +570,8 @@
                         containerSize: "30-40 ft",
                         features: ["Private Fence", "Access Code", "Ground Level", "Easy Loading"],
                         status: "available",
-                        price: null
+                        price: null,
+                        photo: null
                     },
                     {
                         id: 3,
@@ -452,7 +580,8 @@
                         containerSize: "30-40 ft",
                         features: ["Private Fence", "Access Code", "Ground Level", "Easy Loading"],
                         status: "available",
-                        price: null
+                        price: null,
+                        photo: null
                     },
                     {
                         id: 4,
@@ -461,7 +590,8 @@
                         containerSize: "30-40 ft",
                         features: ["Private Fence", "Access Code", "Ground Level", "Easy Loading"],
                         status: "available",
-                        price: null
+                        price: null,
+                        photo: null
                     },
                     {
                         id: 5,
@@ -470,7 +600,8 @@
                         containerSize: "30-40 ft",
                         features: ["Private Fence", "Access Code", "Ground Level", "Easy Loading"],
                         status: "available",
-                        price: null
+                        price: null,
+                        photo: null
                     },
                     {
                         id: 6,
@@ -479,7 +610,8 @@
                         containerSize: "30-40 ft",
                         features: ["Private Fence", "Access Code", "Ground Level", "Easy Loading"],
                         status: "available",
-                        price: null
+                        price: null,
+                        photo: null
                     },
                     {
                         id: 7,
@@ -488,7 +620,8 @@
                         containerSize: "30-40 ft",
                         features: ["Private Fence", "Access Code", "Ground Level", "Easy Loading"],
                         status: "available",
-                        price: null
+                        price: null,
+                        photo: null
                     },
                     {
                         id: 8,
@@ -497,7 +630,8 @@
                         containerSize: "30-40 ft",
                         features: ["Private Fence", "Access Code", "Ground Level", "Easy Loading"],
                         status: "available",
-                        price: null
+                        price: null,
+                        photo: null
                     },
                     {
                         id: 9,
@@ -506,7 +640,8 @@
                         containerSize: "30-40 ft",
                         features: ["Private Fence", "Access Code", "Ground Level", "Easy Loading"],
                         status: "available",
-                        price: null
+                        price: null,
+                        photo: null
                     },
                     {
                         id: 10,
@@ -515,7 +650,8 @@
                         containerSize: "30-40 ft",
                         features: ["Private Fence", "Access Code", "Ground Level", "Easy Loading"],
                         status: "available",
-                        price: null
+                        price: null,
+                        photo: null
                     },
                     {
                         id: 11,
@@ -524,7 +660,8 @@
                         containerSize: "30-40 ft",
                         features: ["Private Fence", "Access Code", "Extra Large", "Premium Space"],
                         status: "available",
-                        price: null
+                        price: null,
+                        photo: null
                     }
                 ]
             };
@@ -539,7 +676,10 @@
             units.forEach(unit => {
                 const card = document.createElement('div');
                 card.className = 'unit-card';
+                const imageHtml = unit.photo ? `<img src="${unit.photo}" alt="${unit.name}" class="unit-image show">` : '';
+                
                 card.innerHTML = `
+                    ${imageHtml}
                     <h4>${unit.name}</h4>
                     <div class="unit-specs">
                         <div class="spec">
@@ -556,9 +696,89 @@
                     </ul>
                     ${unit.price ? `<div class="price">$${unit.price}/month</div>` : '<div class="price-note">Contact for pricing</div>'}
                     <span class="status-badge status-${unit.status}">${unit.status.charAt(0).toUpperCase() + unit.status.slice(1)}</span>
+                    <button class="inquiry-btn" onclick="openInquiry(${unit.id}, '${unit.name}')">Inquire About This Unit</button>
                 `;
                 grid.appendChild(card);
             });
+        }
+
+        function openInquiry(unitId, unitName) {
+            selectedUnitId = unitId;
+            document.getElementById('unitName').textContent = unitName;
+            document.getElementById('inquiryForm').reset();
+            document.getElementById('successMessage').style.display = 'none';
+            document.getElementById('errorMessage').style.display = 'none';
+            document.getElementById('inquiryModal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('inquiryModal').classList.remove('active');
+            selectedUnitId = null;
+        }
+
+        function submitInquiry(event) {
+            event.preventDefault();
+
+            const fullName = document.getElementById('fullName').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const moveDate = document.getElementById('moveDate').value;
+            const message = document.getElementById('message').value;
+
+            // Get unit details
+            const units = JSON.parse(localStorage.getItem('storageUnits')) || [];
+            const unit = units.find(u => u.id === selectedUnitId);
+            const unitName = unit ? unit.name : 'Unknown Unit';
+
+            // Create FormData
+            const formData = new FormData();
+            formData.append('_subject', `New Storage Unit Inquiry - ${unitName}`);
+            formData.append('Full Name', fullName);
+            formData.append('Email', email);
+            formData.append('Phone', phone);
+            formData.append('Unit', unitName);
+            formData.append('Move-In Date', moveDate || 'Not specified');
+            formData.append('Message', message);
+
+            // Send to Formspree
+            fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (response.ok) {
+                    showSuccess('✓ Inquiry sent successfully! We will contact you soon.');
+                    setTimeout(() => {
+                        closeModal();
+                    }, 2500);
+                } else {
+                    showError('There was an error sending your inquiry. Please try again or call us directly.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showError('There was an error sending your inquiry. Please try again or call us directly.');
+            });
+        }
+
+        function showSuccess(message) {
+            const successDiv = document.getElementById('successMessage');
+            successDiv.textContent = message;
+            successDiv.style.display = 'block';
+        }
+
+        function showError(message) {
+            const errorDiv = document.getElementById('errorMessage');
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('inquiryModal');
+            if (event.target === modal) {
+                closeModal();
+            }
         }
 
         // Load units on page load
