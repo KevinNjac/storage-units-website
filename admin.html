@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Kemah Storage Units</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f0f2f5;
+            color: #333;
+        }
+
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+        }
+
+        .login-box {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            width: 90%;
+            max-width: 400px;
+        }
+
+        .login-box h2 {
+            color: #1e3c72;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: #555;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #ff6b6b;
+            box-shadow: 0 0 5px rgba(255, 107, 107, 0.3);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 0.8rem;
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .login-btn:hover {
+            background: #ee5a52;
+        }
+
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 0.8rem;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        /* Admin Dashboard Styles */
+        .admin-dashboard {
+            display: none;
+        }
+
+        .admin-header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .admin-header h1 {
+            font-size: 1.5rem;
+        }
+
+        .logout-btn {
+            background: #ff6b6b;
+            color: white;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .logout-btn:hover {
+            background: #ee5a52;
+        }
+
+        .admin-content {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 2rem;
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .sidebar {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            height: fit-content;
+        }
+
+        .sidebar h3 {
+            color: #1e3c72;
+            margin-bottom: 1rem;
+        }
+
+        .sidebar button {
+            width: 100%;
+            padding: 0.8rem;
+            margin-bottom: 0.5rem;
+            border: 2px solid #e0e0e0;
+            background: white;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: left;
+        }
+
+        .sidebar button:hover,
+        .sidebar button.active {
+            background: #1e3c72;
+            color: white;
+            border-color: #1e3c72;
+        }
+
+        .main-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        .section h2 {
+            color: #1e3c72;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid #ff6b6b;
+            padding-bottom: 0.5rem;
+        }
+
+        .units-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        .units-table th {
+            background: #f0f0f0;
+            color: #1e3c72;
+            padding: 1rem;
+            text-align: left;
+            font-weight: bold;
+            border-bottom: 2px solid #ddd;
+        }
+
+        .units-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .units-table tr:hover {
+            background: #f9f9f9;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .edit-btn, .delete-btn, .add-btn, .save-btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background 0.3s;
+        }
+
+        .add-btn, .save-btn {
+            background: #28a745;
+            color: white;
+        }
+
+        .add-btn:hover, .save-btn:hover {
+            background: #218838;
+        }
+
+        .edit-btn {
+            background: #007bff;
+            color: white;
+        }
+
+        .edit-btn:hover {
+            background: #0056b3;
+        }
+
+        .delete-btn {
+            background: #dc3545;
+            color: white;
+        }
+
+        .delete-btn:hover {
+            background: #c82333;
+        }
+
+        .form-section {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 5px;
+            margin-bottom: 2rem;
+        }
+
+        .form-section h3 {
+            color: #1e3c72;
+            margin-bottom: 1rem;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: #555;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: inherit;
+            font-size: 0.9rem;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #ff6b6b;
+            box-shadow: 0 0 5px rgba(255, 107, 107, 0.3);
+        }
+
+        .image-preview {
+            margin-top: 1rem;
+            text-align: center;
+        }
+
+        .image-preview img {
+            max-width: 200px;
+            max-height: 200px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 1rem;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .stat-card h4 {
+            margin-bottom: 0.5rem;
+            opacity: 0.9;
+        }
+
+        .stat-card .value {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            .admin-content {
+                grid-template-columns: 1fr;
+            }
+
+            .admin-header {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .units-table {
+                font-size: 0.9rem;
+            }
+
+            .units-table th, .units-table td {
+                padding: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Screen -->
+    <div class="login-container" id="loginContainer">
+        <div class="login-box">
+            <h2>Admin Panel Login</h2>
+            <div class="error-message" id="errorMessage"></div>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" required>
+                </div>
+                <button type="submit" class="login-btn">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard -->
+    <div class="admin-dashboard" id="adminDashboard">
+        <div class="admin-header">
+            <h1>📊 Admin Panel - Kemah Storage Units</h1>
+            <button class="logout-btn" onclick="logout()">Logout</button>
+        </div>
+
+        <div class="admin-content">
+            <div class="sidebar">
+                <h3>Menu</h3>
+                <button class="nav-btn active" data-section="dashboard">Dashboard</button>
+                <button class="nav-btn" data-section="units">Manage Units</button>
+                <button class="nav-btn" data-section="edit-unit">Edit Unit</button>
+                <button class="nav-btn" data-section="pricing">Pricing & Photos</button>
+                <button class="nav-btn" data-section="settings">Settings</button>
+            </div>
+
+            <div class="main-content">
+                <!-- Dashboard Section -->
+                <div class="section active" id="dashboard">
+                    <h2>Dashboard Overview</h2>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <h4>Total Units</h4>
+                            <div class="value" id="totalUnits">11</div>
+                        </div>
+                        <div class="stat-card">
+                            <h4>Available Units</h4>
+                            <div class="value" id="availableUnits">11</div>
+                        </div>
+                        <div class="stat-card">
+                            <h4>Reserved Units</h4>
+                            <div class="value" id="reservedUnits">0</div>
+                        </div>
+                        <div class="stat-card">
+                            <h4>Units with Pricing</h4>
+                            <div class="value" id="pricedUnits">0</div>
+                        </div>
+                    </div>
+                    <p>Welcome to the Kemah Storage Units Admin Panel. Use the menu on the left to manage your storage units.</p>
+                </div>
+
+                <!-- Manage Units Section -->
+                <div class="section" id="units">
+                    <h2>All Storage Units</h2>
+                    <div class="success-message" id="successMessage"></div>
+                    <table class="units-table" id="unitsTable">
+                        <thead>
+                            <tr>
+                                <th>Unit Name</th>
+                                <th>Size</th>
+                                <th>Container</th>
+                                <th>Price/Month</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="unitsTableBody">
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Edit Unit Section -->
+                <div class="section" id="edit-unit">
+                    <h2>Edit Storage Unit</h2>
+                    <div class="success-message" id="editSuccessMessage"></div>
+                    <div class="form-section">
+                        <h3>Select Unit to Edit</h3>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="selectUnit">Choose Unit</label>
+                                <select id="selectUnit" onchange="loadUnitForEdit()">
+                                    <option value="">Select a unit...</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section" id="editFormSection" style="display: none;">
+                        <h3>Unit Details</h3>
+                        <form id="editUnitForm" onsubmit="saveUnitEdit(event)">
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="editUnitName">Unit Name</label>
+                                    <input type="text" id="editUnitName" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="editUnitSize">Size (e.g., 50x40 ft)</label>
+                                    <input type="text" id="editUnitSize" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="editContainerSize">Container Size (e.g., 30-40 ft)</label>
+                                    <input type="text" id="editContainerSize" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="editPrice">Price per Month ($)</label>
+                                    <input type="number" id="editPrice" step="0.01">
+                                </div>
+                                <div class="form-group">
+                                    <label for="editStatus">Status</label>
+                                    <select id="editStatus">
+                                        <option value="available">Available</option>
+                                        <option value="reserved">Reserved</option>
+                                        <option value="maintenance">Maintenance</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="editFeatures">Features (comma-separated)</label>
+                                    <input type="text" id="editFeatures" placeholder="Private Fence, Access Code, ...">
+                                </div>
+                            </div>
+                            <button type="submit" class="save-btn">Save Changes</button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Pricing & Photos Section -->
+                <div class="section" id="pricing">
+                    <h2>Pricing & Photos Management</h2>
+                    <div class="success-message" id="pricingSuccessMessage"></div>
+                    <div class="form-section">
+                        <h3>Update Unit Pricing & Images</h3>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="unitSelect">Select Unit</label>
+                                <select id="unitSelect" onchange="loadUnitPricing()">
+                                    <option value="">Select a unit...</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section" id="pricingFormSection" style="display: none;">
+                        <h3>Pricing Details</h3>
+                        <form id="pricingForm" onsubmit="savePricing(event)">
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="priceInput">Monthly Price ($)</label>
+                                    <input type="number" id="priceInput" step="0.01" required>
+                                </div>
+                            </div>
+
+                            <h3 style="margin-top: 2rem; margin-bottom: 1rem;">Unit Photo</h3>
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="photoInput">Upload Photo</label>
+                                    <input type="file" id="photoInput" accept="image/*" onchange="previewImage()">
+                                </div>
+                            </div>
+
+                            <div class="image-preview" id="imagePreview"></div>
+
+                            <button type="submit" class="save-btn" style="margin-top: 2rem;">Save Pricing & Photo</button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Settings Section -->
+                <div class="section" id="settings">
+                    <h2>Admin Settings</h2>
+                    <div class="form-section">
+                        <h3>Change Admin Password</h3>
+                        <form id="settingsForm" onsubmit="changePassword(event)">
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="currentPassword">Current Password</label>
+                                    <input type="password" id="currentPassword" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="newPassword">New Password</label>
+                                    <input type="password" id="newPassword" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="confirmPassword">Confirm New Password</label>
+                                    <input type="password" id="confirmPassword" required>
+                                </div>
+                            </div>
+                            <button type="submit" class="save-btn">Update Password</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const DEFAULT_PASSWORD = "admin123"; // Change this to your desired password
+        let currentEditingUnit = null;
+        let currentEditingPricingUnit = null;
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            setupEventListeners();
+            checkLogin();
+        });
+
+        function setupEventListeners() {
+            // Login form
+            document.getElementById('loginForm').addEventListener('submit', handleLogin);
+
+            // Sidebar navigation
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.addEventListener('click', switchSection);
+            });
+
+            // Edit unit selector
+            document.getElementById('selectUnit').addEventListener('change', populateEditForm);
+            document.getElementById('unitSelect').addEventListener('change', populatePricingForm);
+        }
+
+        function handleLogin(e) {
+            e.preventDefault();
+            const password = document.getElementById('password').value;
+
+            if (password === DEFAULT_PASSWORD) {
+                localStorage.setItem('adminLoggedIn', 'true');
+                showDashboard();
+            } else {
+                showError('Invalid password');
+                document.getElementById('password').value = '';
+            }
+        }
+
+        function showError(message) {
+            const errorDiv = document.getElementById('errorMessage');
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+            setTimeout(() => {
+                errorDiv.style.display = 'none';
+            }, 3000);
+        }
+
+        function showSuccess(message, sectionId = 'successMessage') {
+            const successDiv = document.getElementById(sectionId);
+            successDiv.textContent = message;
+            successDiv.style.display = 'block';
+            setTimeout(() => {
+                successDiv.style.display = 'none';
+            }, 3000);
+        }
+
+        function checkLogin() {
+            if (localStorage.getItem('adminLoggedIn') === 'true') {
+                showDashboard();
+            }
+        }
+
+        function showDashboard() {
+            document.getElementById('loginContainer').style.display = 'none';
+            document.getElementById('adminDashboard').style.display = 'block';
+            loadUnitsData();
+            updateDashboardStats();
+        }
+
+        function logout() {
+            localStorage.removeItem('adminLoggedIn');
+            document.getElementById('loginContainer').style.display = 'flex';
+            document.getElementById('adminDashboard').style.display = 'none';
+            document.getElementById('password').value = '';
+        }
+
+        function switchSection(e) {
+            const sectionId = e.target.dataset.section;
+            
+            // Update active button
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+            e.target.classList.add('active');
+
+            // Update active section
+            document.querySelectorAll('.section').forEach(section => section.classList.remove('active'));
+            document.getElementById(sectionId).classList.add('active');
+
+            if (sectionId === 'units') {
+                renderUnitsTable();
+            } else if (sectionId === 'edit-unit') {
+                populateEditUnitSelect();
+            } else if (sectionId === 'pricing') {
+                populatePricingSelect();
+            } else if (sectionId === 'dashboard') {
+                updateDashboardStats();
+            }
+        }
+
+        function loadUnitsData() {
+            const savedUnits = localStorage.getItem('storageUnits');
+            if (!savedUnits) {
+                const defaultUnits = generateDefaultUnits();
+                localStorage.setItem('storageUnits', JSON.stringify(defaultUnits));
+            }
+        }
+
+        function generateDefaultUnits() {
+            const units = [];
+            for (let i = 1; i <= 10; i++) {
+                units.push({
+                    id: i,
+                    name: `Unit ${i}`,
+                    size: "50 x 40 ft",
+                    containerSize: "30-40 ft",
+                    features: ["Private Fence", "Access Code", "Ground Level", "Easy Loading"],
+                    status: "available",
+                    price: null,
+                    photo: null
+                });
+            }
+            units.push({
+                id: 11,
+                name: "Unit 11 - Premium",
+                size: "150 x 40 ft",
+                containerSize: "30-40 ft",
+                features: ["Private Fence", "Access Code", "Extra Large", "Premium Space"],
+                status: "available",
+                price: null,
+                photo: null
+            });
+            return units;
+        }
+
+        function getUnits() {
+            const saved = localStorage.getItem('storageUnits');
+            return saved ? JSON.parse(saved) : generateDefaultUnits();
+        }
+
+        function saveUnits(units) {
+            localStorage.setItem('storageUnits', JSON.stringify(units));
+        }
+
+        function renderUnitsTable() {
+            const units = getUnits();
+            const tbody = document.getElementById('unitsTableBody');
+            tbody.innerHTML = '';
+
+            units.forEach(unit => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${unit.name}</td>
+                    <td>${unit.size}</td>
+                    <td>${unit.containerSize}</td>
+                    <td>${unit.price ? '$' + unit.price : 'Not set'}</td>
+                    <td>${unit.status}</td>
+                    <td>
+                        <div class="action-buttons">
+                            <button class="edit-btn" onclick="editUnit(${unit.id})">Edit</button>
+                            <button class="delete-btn" onclick="deleteUnit(${unit.id})">Delete</button>
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function editUnit(unitId) {
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelector('[data-section="edit-unit"]').classList.add('active');
+            
+            document.querySelectorAll('.section').forEach(section => section.classList.remove('active'));
+            document.getElementById('edit-unit').classList.add('active');
+
+            document.getElementById('selectUnit').value = unitId;
+            loadUnitForEdit();
+        }
+
+        function deleteUnit(unitId) {
+            if (confirm('Are you sure you want to delete this unit?')) {
+                let units = getUnits();
+                units = units.filter(u => u.id !== unitId);
+                saveUnits(units);
+                showSuccess('Unit deleted successfully', 'successMessage');
+                renderUnitsTable();
+                updateDashboardStats();
+            }
+        }
+
+        function populateEditUnitSelect() {
+            const units = getUnits();
+            const select = document.getElementById('selectUnit');
+            select.innerHTML = '<option value="">Select a unit...</option>';
+            units.forEach(unit => {
+                const option = document.createElement('option');
+                option.value = unit.id;
+                option.textContent = unit.name;
+                select.appendChild(option);
+            });
+        }
+
+        function loadUnitForEdit() {
+            const unitId = document.getElementById('selectUnit').value;
+            if (!unitId) {
+                document.getElementById('editFormSection').style.display = 'none';
+                return;
+            }
+
+            const units = getUnits();
+            const unit = units.find(u => u.id == unitId);
+            
+            if (unit) {
+                document.getElementById('editUnitName').value = unit.name;
+                document.getElementById('editUnitSize').value = unit.size;
+                document.getElementById('editContainerSize').value = unit.containerSize;
+                document.getElementById('editPrice').value = unit.price || '';
+                document.getElementById('editStatus').value = unit.status;
+                document.getElementById('editFeatures').value = unit.features.join(', ');
+                document.getElementById('editFormSection').style.display = 'block';
+                currentEditingUnit = unitId;
+            }
+        }
+
+        function saveUnitEdit(e) {
+            e.preventDefault();
+            let units = getUnits();
+            const unit = units.find(u => u.id == currentEditingUnit);
+
+            if (unit) {
+                unit.name = document.getElementById('editUnitName').value;
+                unit.size = document.getElementById('editUnitSize').value;
+                unit.containerSize = document.getElementById('editContainerSize').value;
+                unit.price = document.getElementById('editPrice').value ? parseFloat(document.getElementById('editPrice').value) : null;
+                unit.status = document.getElementById('editStatus').value;
+                unit.features = document.getElementById('editFeatures').value.split(',').map(f => f.trim());
+
+                saveUnits(units);
+                showSuccess('Unit updated successfully', 'editSuccessMessage');
+                renderUnitsTable();
+                updateDashboardStats();
+                document.getElementById('editUnitForm').reset();
+                document.getElementById('editFormSection').style.display = 'none';
+                document.getElementById('selectUnit').value = '';
+            }
+        }
+
+        function populatePricingSelect() {
+            const units = getUnits();
+            const select = document.getElementById('unitSelect');
+            select.innerHTML = '<option value="">Select a unit...</option>';
+            units.forEach(unit => {
+                const option = document.createElement('option');
+                option.value = unit.id;
+                option.textContent = unit.name;
+                select.appendChild(option);
+            });
+        }
+
+        function loadUnitPricing() {
+            const unitId = document.getElementById('unitSelect').value;
+            if (!unitId) {
+                document.getElementById('pricingFormSection').style.display = 'none';
+                return;
+            }
+
+            const units = getUnits();
+            const unit = units.find(u => u.id == unitId);
+            
+            if (unit) {
+                document.getElementById('priceInput').value = unit.price || '';
+                document.getElementById('pricingFormSection').style.display = 'block';
+                currentEditingPricingUnit = unitId;
+
+                const previewDiv = document.getElementById('imagePreview');
+                if (unit.photo) {
+                    previewDiv.innerHTML = `<img src="${unit.photo}" alt="Unit preview">`;
+                } else {
+                    previewDiv.innerHTML = '';
+                }
+            }
+        }
+
+        function previewImage() {
+            const fileInput = document.getElementById('photoInput');
+            const file = fileInput.files[0];
+            const previewDiv = document.getElementById('imagePreview');
+
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    previewDiv.innerHTML = `<img src="${e.target.result}" alt="Preview">`;
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function savePricing(e) {
+            e.preventDefault();
+            let units = getUnits();
+            const unit = units.find(u => u.id == currentEditingPricingUnit);
+
+            if (unit) {
+                unit.price = parseFloat(document.getElementById('priceInput').value) || null;
+
+                const fileInput = document.getElementById('photoInput');
+                if (fileInput.files.length > 0) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        unit.photo = e.target.result;
+                        saveUnits(units);
+                        showSuccess('Pricing and photo updated successfully', 'pricingSuccessMessage');
+                        updateDashboardStats();
+                        document.getElementById('pricingForm').reset();
+                        document.getElementById('unitSelect').value = '';
+                        document.getElementById('pricingFormSection').style.display = 'none';
+                    };
+                    reader.readAsDataURL(fileInput.files[0]);
+                } else {
+                    saveUnits(units);
+                    showSuccess('Pricing updated successfully', 'pricingSuccessMessage');
+                    updateDashboardStats();
+                    document.getElementById('pricingForm').reset();
+                    document.getElementById('unitSelect').value = '';
+                    document.getElementById('pricingFormSection').style.display = 'none';
+                }
+            }
+        }
+
+        function updateDashboardStats() {
+            const units = getUnits();
+            document.getElementById('totalUnits').textContent = units.length;
+            document.getElementById('availableUnits').textContent = units.filter(u => u.status === 'available').length;
+            document.getElementById('reservedUnits').textContent = units.filter(u => u.status === 'reserved').length;
+            document.getElementById('pricedUnits').textContent = units.filter(u => u.price !== null).length;
+        }
+
+        function changePassword(e) {
+            e.preventDefault();
+            const current = document.getElementById('currentPassword').value;
+            const newPass = document.getElementById('newPassword').value;
+            const confirm = document.getElementById('confirmPassword').value;
+
+            if (current !== DEFAULT_PASSWORD) {
+                showError('Current password is incorrect');
+                return;
+            }
+
+            if (newPass !== confirm) {
+                showError('New passwords do not match');
+                return;
+            }
+
+            // Note: In a real application, this would be sent to a server
+            // For now, we'll just show a message
+            showSuccess('Note: Password change requires server-side implementation');
+            document.getElementById('settingsForm').reset();
+        }
+
+        function populateEditForm() {
+            loadUnitForEdit();
+        }
+
+        function populatePricingForm() {
+            loadUnitPricing();
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kemah Storage Units - Secure Storage Solutions</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo h1 {
+            font-size: 1.8rem;
+        }
+
+        .logo p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        nav a {
+            color: white;
+            margin-left: 2rem;
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+
+        nav a:hover {
+            opacity: 0.8;
+        }
+
+        .admin-btn {
+            background: #ff6b6b;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            text-decoration: none;
+            color: white;
+            transition: background 0.3s;
+        }
+
+        .admin-btn:hover {
+            background: #ee5a52;
+        }
+
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400"><rect fill="%231e3c72" width="1200" height="400"/><path fill="%232a5298" d="M0 200L50 220L100 180L150 210L200 170L250 200L300 190L350 220L400 180L450 210L500 170L550 200L600 190L650 220L700 180L750 210L800 170L850 200L900 190L950 220L1000 180L1050 210L1100 170L1150 200L1200 190V400H0Z"/></svg>');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 6rem 2rem;
+            text-align: center;
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+        }
+
+        .cta-button {
+            background: #ff6b6b;
+            color: white;
+            padding: 0.8rem 2rem;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .cta-button:hover {
+            background: #ee5a52;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .info-section {
+            background: #f8f9fa;
+            padding: 3rem 2rem;
+            margin: 2rem 0;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .info-section h3 {
+            color: #1e3c72;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .units-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .unit-card {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 1.5rem;
+            transition: all 0.3s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .unit-card:hover {
+            border-color: #ff6b6b;
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .unit-card h4 {
+            color: #1e3c72;
+            margin-bottom: 0.5rem;
+            font-size: 1.3rem;
+        }
+
+        .unit-specs {
+            background: #f0f0f0;
+            padding: 1rem;
+            border-radius: 5px;
+            margin: 1rem 0;
+            text-align: left;
+        }
+
+        .spec {
+            display: flex;
+            justify-content: space-between;
+            margin: 0.5rem 0;
+            font-size: 0.95rem;
+        }
+
+        .spec-label {
+            font-weight: bold;
+            color: #555;
+        }
+
+        .spec-value {
+            color: #1e3c72;
+        }
+
+        .price {
+            font-size: 1.3rem;
+            color: #ff6b6b;
+            font-weight: bold;
+            margin: 1rem 0;
+        }
+
+        .price-note {
+            font-size: 0.85rem;
+            color: #666;
+            font-style: italic;
+        }
+
+        .features {
+            list-style: none;
+            margin: 1rem 0;
+            text-align: left;
+        }
+
+        .features li {
+            padding: 0.3rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .features li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #ff6b6b;
+            font-weight: bold;
+        }
+
+        .contact-section {
+            background: #1e3c72;
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+            border-radius: 10px;
+        }
+
+        .contact-section h3 {
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .contact-item {
+            background: rgba(255,255,255,0.1);
+            padding: 1.5rem;
+            border-radius: 8px;
+        }
+
+        .contact-item h4 {
+            margin-bottom: 0.5rem;
+        }
+
+        footer {
+            background: #0a1428;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 2rem;
+            border: 1px solid #888;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 500px;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 1.5rem;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: black;
+        }
+
+        .modal h2 {
+            color: #1e3c72;
+            margin-bottom: 1rem;
+        }
+
+        .modal-form input,
+        .modal-form textarea {
+            width: 100%;
+            padding: 0.8rem;
+            margin: 0.5rem 0 1rem 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: inherit;
+        }
+
+        .modal-form button {
+            background: #ff6b6b;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .modal-form button:hover {
+            background: #ee5a52;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-top: 0.5rem;
+        }
+
+        .status-available {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-reserved {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            nav a {
+                margin-left: 1rem;
+            }
+
+            .hero h2 {
+                font-size: 1.8rem;
+            }
+
+            .units-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <h1>🏢 Kemah Storage Units</h1>
+                <p>Secure Self-Storage Solutions</p>
+            </div>
+            <nav>
+                <a href="#units">Storage Units</a>
+                <a href="#contact">Contact</a>
+                <a href="admin.html" class="admin-btn">Admin Panel</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <h2>Secure Storage Solutions in Kemah, Texas</h2>
+        <p>Climate-controlled, individually fenced units with private access codes</p>
+        <a href="#units" class="cta-button">View Available Units</a>
+    </section>
+
+    <div class="container">
+        <section class="info-section">
+            <h3>Why Choose Kemah Storage Units?</h3>
+            <p>Located at 1250 Winfield Ln, Kemah, Texas, we provide premium self-storage solutions with:</p>
+            <ul class="features" style="display: inline-block; margin-top: 1rem;">
+                <li>Individual privacy fences around each unit</li>
+                <li>Personalized access codes for security</li>
+                <li>Various sizes to meet your needs</li>
+                <li>Professional management and maintenance</li>
+            </ul>
+        </section>
+
+        <section id="units">
+            <h2 style="text-align: center; color: #1e3c72; margin: 2rem 0;">Available Storage Units</h2>
+            <div class="units-grid" id="unitsGrid">
+                <!-- Units will be loaded here from storage.json -->
+            </div>
+        </section>
+    </div>
+
+    <section class="contact-section" id="contact">
+        <div class="container">
+            <h3>Get In Touch</h3>
+            <p>Ready to rent a storage unit? Contact us today!</p>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <h4>📍 Location</h4>
+                    <p>1250 Winfield Ln<br>Kemah, TX</p>
+                </div>
+                <div class="contact-item">
+                    <h4>📞 Phone</h4>
+                    <p><a href="tel:+17135551234" style="color: white;">+1 (713) 555-1234</a></p>
+                </div>
+                <div class="contact-item">
+                    <h4>✉️ Email</h4>
+                    <p><a href="mailto:info@kemahstorage.com" style="color: white;">info@kemahstorage.com</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Kemah Storage Units. All rights reserved. | 1250 Winfield Ln, Kemah, TX</p>
+    </footer>
+
+    <script>
+        // Load storage units from JSON data
+        function loadUnits() {
+            const unitsData = {
+                units: [
+                    {
+                        id: 1,
+                        name: "Unit 1",
+                        size: "50 x 40 ft",
+                        containerSize: "30-40 ft",
+                        features: ["Private Fence", "Access Code", "Ground Level", "Easy Loading"],
+                        status: "available",
+                        price: null
+                    },
+                    {
+                        id: 2,
+                        name: "Unit 2",
+                        size: "50 x 40 ft",
+                        containerSize: "30-40 ft",
+                        features: ["Private Fence", "Access Code", "Ground Level", "Easy Loading"],
+                        status: "available",
+                        price: null
+                    },
+                    {
+                        id: 3,
+                        name: "Unit 3",
+                        size: "50 x 40 ft",
+                        containerSize: "30-40 ft",
+                        features: ["Private Fence", "Access Code", "Ground Level", "Easy Loading"],
+                        status: "available",
+                        price: null
+                    },
+                    {
+                        id: 4,
+                        name: "Unit 4",
+                        size: "50 x 40 ft",
+                        containerSize: "30-40 ft",
+                        features: ["Private Fence", "Access Code", "Ground Level", "Easy Loading"],
+                        status: "available",
+                        price: null
+                    },
+                    {
+                        id: 5,
+                        name: "Unit 5",
+                        size: "50 x 40 ft",
+                        containerSize: "30-40 ft",
+                        features: ["Private Fence", "Access Code", "Ground Level", "Easy Loading"],
+                        status: "available",
+                        price: null
+                    },
+                    {
+                        id: 6,
+                        name: "Unit 6",
+                        size: "50 x 40 ft",
+                        containerSize: "30-40 ft",
+                        features: ["Private Fence", "Access Code", "Ground Level", "Easy Loading"],
+                        status: "available",
+                        price: null
+                    },
+                    {
+                        id: 7,
+                        name: "Unit 7",
+                        size: "50 x 40 ft",
+                        containerSize: "30-40 ft",
+                        features: ["Private Fence", "Access Code", "Ground Level", "Easy Loading"],
+                        status: "available",
+                        price: null
+                    },
+                    {
+                        id: 8,
+                        name: "Unit 8",
+                        size: "50 x 40 ft",
+                        containerSize: "30-40 ft",
+                        features: ["Private Fence", "Access Code", "Ground Level", "Easy Loading"],
+                        status: "available",
+                        price: null
+                    },
+                    {
+                        id: 9,
+                        name: "Unit 9",
+                        size: "50 x 40 ft",
+                        containerSize: "30-40 ft",
+                        features: ["Private Fence", "Access Code", "Ground Level", "Easy Loading"],
+                        status: "available",
+                        price: null
+                    },
+                    {
+                        id: 10,
+                        name: "Unit 10",
+                        size: "50 x 40 ft",
+                        containerSize: "30-40 ft",
+                        features: ["Private Fence", "Access Code", "Ground Level", "Easy Loading"],
+                        status: "available",
+                        price: null
+                    },
+                    {
+                        id: 11,
+                        name: "Unit 11 - Premium",
+                        size: "150 x 40 ft",
+                        containerSize: "30-40 ft",
+                        features: ["Private Fence", "Access Code", "Extra Large", "Premium Space"],
+                        status: "available",
+                        price: null
+                    }
+                ]
+            };
+
+            // Load from localStorage if exists
+            const savedUnits = localStorage.getItem('storageUnits');
+            const units = savedUnits ? JSON.parse(savedUnits) : unitsData.units;
+
+            const grid = document.getElementById('unitsGrid');
+            grid.innerHTML = '';
+
+            units.forEach(unit => {
+                const card = document.createElement('div');
+                card.className = 'unit-card';
+                card.innerHTML = `
+                    <h4>${unit.name}</h4>
+                    <div class="unit-specs">
+                        <div class="spec">
+                            <span class="spec-label">Unit Size:</span>
+                            <span class="spec-value">${unit.size}</span>
+                        </div>
+                        <div class="spec">
+                            <span class="spec-label">Container:</span>
+                            <span class="spec-value">${unit.containerSize}</span>
+                        </div>
+                    </div>
+                    <ul class="features">
+                        ${unit.features.map(f => `<li>${f}</li>`).join('')}
+                    </ul>
+                    ${unit.price ? `<div class="price">$${unit.price}/month</div>` : '<div class="price-note">Contact for pricing</div>'}
+                    <span class="status-badge status-${unit.status}">${unit.status.charAt(0).toUpperCase() + unit.status.slice(1)}</span>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Load units on page load
+        document.addEventListener('DOMContentLoaded', loadUnits);
+    </script>
+</body>
+</html>
