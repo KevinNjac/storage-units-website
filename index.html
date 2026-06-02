@@ -49,6 +49,7 @@
             color: white;
             margin-left: 2rem;
             text-decoration: none;
+            font-weight: 500;
             transition: opacity 0.3s;
         }
 
@@ -56,43 +57,21 @@
             opacity: 0.8;
         }
 
-        .admin-btn {
-            background: #ff6b6b;
-            padding: 0.5rem 1rem;
-            border-radius: 5px;
-            text-decoration: none;
-            color: white;
-            transition: background 0.3s;
-        }
-
-        .admin-btn:hover {
-            background: #ee5a52;
-        }
-
         .hero {
-            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400"><rect fill="%231e3c72" width="1200" height="400"/><path fill="%232a5298" d="M0 200L50 220L100 180L150 210L200 170L250 200L300 190L350 220L400 180L450 210L500 170L550 200L600 190L650 220L700 180L750 210L800 170L850 200L900 190L950 220L1000 180L1050 210L1100 170L1150 200L1200 190V400H0Z"/></svg>');
-            background-size: cover;
-            background-position: center;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
             color: white;
-            padding: 6rem 2rem;
+            padding: 4rem 2rem;
             text-align: center;
-            min-height: 400px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
         }
 
         .hero h2 {
             font-size: 2.5rem;
             margin-bottom: 1rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
         }
 
         .hero p {
             font-size: 1.2rem;
             margin-bottom: 2rem;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
         }
 
         .cta-button {
@@ -104,12 +83,10 @@
             font-size: 1rem;
             cursor: pointer;
             transition: background 0.3s;
-            text-decoration: none;
-            display: inline-block;
         }
 
         .cta-button:hover {
-            background: #ee5a52;
+            background: #ff5252;
         }
 
         .container {
@@ -118,175 +95,142 @@
             padding: 2rem;
         }
 
-        .info-section {
-            background: #f8f9fa;
-            padding: 3rem 2rem;
-            margin: 2rem 0;
-            border-radius: 10px;
-            text-align: center;
-        }
-
-        .info-section h3 {
-            color: #1e3c72;
-            margin-bottom: 1rem;
-            font-size: 1.5rem;
-        }
-
         .units-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 2rem;
-            margin: 3rem 0;
+            margin: 2rem 0;
         }
 
         .unit-card {
             background: white;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            padding: 1.5rem;
-            transition: all 0.3s;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
         }
 
         .unit-card:hover {
-            border-color: #ff6b6b;
-            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.2);
             transform: translateY(-5px);
-        }
-
-        .unit-card h4 {
-            color: #1e3c72;
-            margin-bottom: 0.5rem;
-            font-size: 1.3rem;
+            box-shadow: 0 8px 12px rgba(0,0,0,0.2);
         }
 
         .unit-image {
             width: 100%;
             height: 200px;
-            background: #f0f0f0;
-            border-radius: 8px;
-            margin-bottom: 1rem;
-            object-fit: cover;
-            display: none;
-        }
-
-        .unit-image.show {
-            display: block;
-        }
-
-        .unit-specs {
-            background: #f0f0f0;
-            padding: 1rem;
-            border-radius: 5px;
-            margin: 1rem 0;
-            text-align: left;
-        }
-
-        .spec {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             display: flex;
-            justify-content: space-between;
-            margin: 0.5rem 0;
-            font-size: 0.95rem;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
         }
 
-        .spec-label {
-            font-weight: bold;
-            color: #555;
+        .unit-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
-        .spec-value {
+        .unit-content {
+            padding: 1.5rem;
+        }
+
+        .unit-content h3 {
+            margin-bottom: 0.5rem;
             color: #1e3c72;
         }
 
-        .price {
-            font-size: 1.3rem;
-            color: #ff6b6b;
-            font-weight: bold;
-            margin: 1rem 0;
-        }
-
-        .price-note {
-            font-size: 0.85rem;
+        .unit-content p {
+            margin: 0.5rem 0;
             color: #666;
-            font-style: italic;
         }
 
-        .features {
-            list-style: none;
-            margin: 1rem 0;
-            text-align: left;
-        }
-
-        .features li {
-            padding: 0.3rem 0;
-            padding-left: 1.5rem;
-            position: relative;
-        }
-
-        .features li:before {
-            content: "✓";
-            position: absolute;
-            left: 0;
-            color: #ff6b6b;
+        .unit-price {
+            font-size: 1.5rem;
             font-weight: bold;
+            color: #ff6b6b;
+            margin: 1rem 0;
         }
 
         .inquiry-btn {
-            background: #28a745;
-            color: white;
-            padding: 0.8rem 1.5rem;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 0.95rem;
             width: 100%;
+            background: #1e3c72;
+            color: white;
+            padding: 0.8rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
             transition: background 0.3s;
-            margin-top: 1rem;
         }
 
         .inquiry-btn:hover {
-            background: #218838;
+            background: #2a5298;
         }
 
-        .contact-section {
-            background: #1e3c72;
-            color: white;
-            padding: 3rem 2rem;
-            text-align: center;
-            border-radius: 10px;
+        .admin-panel {
+            background: #f5f5f5;
+            padding: 2rem;
+            border-radius: 8px;
+            margin: 2rem 0;
         }
 
-        .contact-section h3 {
-            margin-bottom: 1rem;
-            font-size: 1.8rem;
-        }
-
-        .contact-info {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .contact-item {
-            background: rgba(255,255,255,0.1);
+        .admin-section {
+            margin: 2rem 0;
+            background: white;
             padding: 1.5rem;
             border-radius: 8px;
         }
 
-        .contact-item h4 {
-            margin-bottom: 0.5rem;
+        .admin-section h3 {
+            color: #1e3c72;
+            margin-bottom: 1rem;
         }
 
-        footer {
-            background: #0a1428;
+        input[type="text"],
+        input[type="email"],
+        input[type="number"],
+        input[type="date"],
+        textarea,
+        input[type="file"] {
+            width: 100%;
+            padding: 0.8rem;
+            margin: 0.5rem 0 1rem 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: inherit;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .btn {
+            background: #1e3c72;
             color: white;
-            text-align: center;
-            padding: 2rem;
-            margin-top: 3rem;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s;
+            margin-right: 0.5rem;
         }
 
-        /* Modal Styles */
+        .btn:hover {
+            background: #2a5298;
+        }
+
+        .btn-danger {
+            background: #ff6b6b;
+        }
+
+        .btn-danger:hover {
+            background: #ff5252;
+        }
+
         .modal {
             display: none;
             position: fixed;
@@ -296,138 +240,101 @@
             width: 100%;
             height: 100%;
             background-color: rgba(0,0,0,0.5);
-            overflow-y: auto;
+            animation: fadeIn 0.3s;
         }
 
-        .modal.active {
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         .modal-content {
             background-color: white;
+            margin: 5% auto;
             padding: 2rem;
-            border-radius: 10px;
+            border-radius: 8px;
             width: 90%;
-            max-width: 600px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            max-height: 90vh;
-            overflow-y: auto;
-            margin: auto;
+            max-width: 500px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            animation: slideIn 0.3s;
         }
 
-        .close-btn {
+        @keyframes slideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .close {
             color: #aaa;
             float: right;
-            font-size: 1.5rem;
+            font-size: 28px;
             font-weight: bold;
             cursor: pointer;
-            transition: color 0.3s;
         }
 
-        .close-btn:hover {
+        .close:hover {
             color: black;
         }
 
         .modal h2 {
             color: #1e3c72;
-            margin-bottom: 1rem;
-            margin-right: 2rem;
+            margin-bottom: 1.5rem;
         }
 
-        .form-group {
-            margin-bottom: 1rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: bold;
-            color: #555;
-        }
-
-        .form-group input,
-        .form-group textarea {
+        table {
             width: 100%;
-            padding: 0.8rem;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+
+        th, td {
             border: 1px solid #ddd;
-            border-radius: 5px;
-            font-family: inherit;
-            font-size: 0.95rem;
+            padding: 0.8rem;
+            text-align: left;
         }
 
-        .form-group textarea {
-            resize: vertical;
-            min-height: 100px;
-        }
-
-        .form-group input:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: #ff6b6b;
-            box-shadow: 0 0 5px rgba(255, 107, 107, 0.3);
-        }
-
-        .submit-btn {
-            background: #ff6b6b;
+        th {
+            background: #1e3c72;
             color: white;
-            padding: 0.8rem 2rem;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 1rem;
-            width: 100%;
-            transition: background 0.3s;
         }
 
-        .submit-btn:hover {
-            background: #ee5a52;
+        tr:nth-child(even) {
+            background: #f9f9f9;
         }
 
-        .status-badge {
-            display: inline-block;
-            padding: 0.3rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: bold;
-            margin-top: 0.5rem;
-        }
-
-        .status-available {
-            background: #d4edda;
-            color: #155724;
-        }
-
-        .status-reserved {
-            background: #fff3cd;
-            color: #856404;
+        footer {
+            background: #1e3c72;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 2rem;
         }
 
         .success-message {
-            background: #d4edda;
-            color: #155724;
+            background: #4caf50;
+            color: white;
             padding: 1rem;
-            border-radius: 5px;
-            margin-bottom: 1rem;
+            border-radius: 4px;
+            margin: 1rem 0;
             display: none;
         }
 
         .error-message {
-            background: #f8d7da;
-            color: #721c24;
+            background: #ff6b6b;
+            color: white;
             padding: 1rem;
-            border-radius: 5px;
-            margin-bottom: 1rem;
+            border-radius: 4px;
+            margin: 1rem 0;
             display: none;
         }
 
         @media (max-width: 768px) {
-            .header-container {
-                flex-direction: column;
-                gap: 1rem;
-            }
-
             nav a {
                 margin-left: 1rem;
             }
@@ -439,10 +346,6 @@
             .units-grid {
                 grid-template-columns: 1fr;
             }
-
-            .modal-content {
-                width: 95%;
-            }
         }
     </style>
 </head>
@@ -450,339 +353,342 @@
     <header>
         <div class="header-container">
             <div class="logo">
-                <h1>🏢 Kemah Storage Units</h1>
-                <p>Secure Self-Storage Solutions</p>
+                <h1>🏪 Kemah Storage Units</h1>
+                <p>Secure & Affordable Storage Solutions</p>
             </div>
             <nav>
-                <a href="#units">Storage Units</a>
+                <a href="#units">Units</a>
+                <a href="#admin">Admin</a>
                 <a href="#contact">Contact</a>
-                <a href="admin.html" class="admin-btn">Admin Panel</a>
             </nav>
         </div>
     </header>
 
     <section class="hero">
-        <h2>Secure Storage Solutions in Kemah, Texas</h2>
-        <p>Climate-controlled, individually fenced units with private access codes</p>
-        <a href="#units" class="cta-button">View Available Units</a>
+        <div class="container">
+            <h2>Welcome to Kemah Storage Units</h2>
+            <p>Secure, clean, and affordable storage solutions for your needs</p>
+            <button class="cta-button" onclick="document.getElementById('units').scrollIntoView({behavior: 'smooth'})">View Our Units</button>
+        </div>
     </section>
 
-    <div class="container">
-        <section class="info-section">
-            <h3>Why Choose Kemah Storage Units?</h3>
-            <p>Located at 1250 Winfield Ln, Kemah, Texas, we provide premium self-storage solutions with:</p>
-            <ul class="features" style="display: inline-block; margin-top: 1rem;">
-                <li>Individual privacy fences around each unit</li>
-                <li>Personalized access codes for security</li>
-                <li>Various sizes to meet your needs</li>
-                <li>Professional management and maintenance</li>
-            </ul>
-        </section>
+    <section id="units" class="container">
+        <h2 style="text-align: center; margin: 2rem 0; color: #1e3c72;">Available Storage Units</h2>
+        <div class="units-grid" id="unitsGrid"></div>
+    </section>
 
-        <section id="units">
-            <h2 style="text-align: center; color: #1e3c72; margin: 2rem 0;">Available Storage Units</h2>
-            <div class="units-grid" id="unitsGrid">
-                <!-- Units will be loaded here -->
-            </div>
-        </section>
-    </div>
-
-    <section class="contact-section" id="contact">
+    <section id="admin" class="admin-panel">
         <div class="container">
-            <h3>Get In Touch</h3>
-            <p>Ready to rent a storage unit? Contact us today!</p>
-            <div class="contact-info">
-                <div class="contact-item">
-                    <h4>📍 Location</h4>
-                    <p>1250 Winfield Ln<br>Kemah, TX</p>
-                </div>
-                <div class="contact-item">
-                    <h4>📞 Phone</h4>
-                    <p><a href="tel:+17135551234" style="color: white;">+1 (713) 555-1234</a></p>
-                </div>
-                <div class="contact-item">
-                    <h4>✉️ Email</h4>
-                    <p><a href="mailto:Kclarkgroup@gmail.com" style="color: white;">Kclarkgroup@gmail.com</a></p>
-                </div>
+            <h2 style="color: #1e3c72;">Admin Panel</h2>
+
+            <div class="admin-section">
+                <h3>Add New Storage Unit</h3>
+                <input type="text" id="unitName" placeholder="Unit Name (e.g., Unit A1)">
+                <input type="text" id="unitSize" placeholder="Size (e.g., 10x10)">
+                <input type="number" id="unitPrice" placeholder="Price (per month)">
+                <input type="text" id="unitLocation" placeholder="Location">
+                <textarea id="unitDescription" placeholder="Description"></textarea>
+                <input type="file" id="unitPhoto" accept="image/*">
+                <button class="btn" onclick="addUnit()">Add Unit</button>
+            </div>
+
+            <div class="admin-section">
+                <h3>Pricing & Photos</h3>
+                <div id="photoManagement"></div>
+            </div>
+
+            <div class="admin-section">
+                <h3>All Storage Units</h3>
+                <table id="unitsTable">
+                    <thead>
+                        <tr>
+                            <th>Unit Name</th>
+                            <th>Size</th>
+                            <th>Price/Month</th>
+                            <th>Location</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="unitsTableBody"></tbody>
+                </table>
+            </div>
+
+            <div class="admin-section">
+                <h3>Inquiries</h3>
+                <p>All inquiries are sent to: <strong>Kclarkgroup@gmail.com</strong></p>
+                <p>Check your Formspree dashboard at <a href="https://formspree.io/" target="_blank">formspree.io</a> to view submitted inquiries.</p>
+                <table id="inquiriesTable">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Message Preview</th>
+                        </tr>
+                    </thead>
+                    <tbody id="inquiriesTableBody"></tbody>
+                </table>
             </div>
         </div>
     </section>
 
+    <section id="contact" class="container" style="text-align: center; padding: 2rem;">
+        <h2 style="color: #1e3c72;">Contact Us</h2>
+        <p>Email: <strong>Kclarkgroup@gmail.com</strong></p>
+        <p>Ready to rent? Inquire about any unit above!</p>
+    </section>
+
     <footer>
-        <p>&copy; 2024 Kemah Storage Units. All rights reserved. | 1250 Winfield Ln, Kemah, TX</p>
+        <p>&copy; 2024 Kemah Storage Units. All rights reserved.</p>
     </footer>
 
     <!-- Inquiry Modal -->
-    <div class="modal" id="inquiryModal">
+    <div id="inquiryModal" class="modal">
         <div class="modal-content">
-            <span class="close-btn" onclick="closeModal()">&times;</span>
-            <h2>Inquiry for <span id="unitName"></span></h2>
-            <div class="success-message" id="successMessage"></div>
-            <div class="error-message" id="errorMessage"></div>
-            <form id="inquiryForm" onsubmit="submitInquiry(event)">
-                <div class="form-group">
-                    <label for="fullName">Full Name *</label>
-                    <input type="text" id="fullName" name="fullName" required>
-                </div>
-                <div class="form-group">
-                    <label for="email">Email *</label>
-                    <input type="email" id="email" name="email" required>
-                </div>
-                <div class="form-group">
-                    <label for="phone">Phone Number *</label>
-                    <input type="tel" id="phone" name="phone" required>
-                </div>
-                <div class="form-group">
-                    <label for="moveDate">Expected Move-In Date</label>
-                    <input type="date" id="moveDate" name="moveDate">
-                </div>
-                <div class="form-group">
-                    <label for="message">Message / Additional Details</label>
-                    <textarea id="message" name="message" placeholder="Tell us more about your storage needs..."></textarea>
-                </div>
-                <button type="submit" class="submit-btn">Send Inquiry</button>
+            <span class="close" onclick="closeInquiryModal()">&times;</span>
+            <h2>Inquire About This Unit</h2>
+            <form id="inquiryForm" action="https://formspree.io/f/mzdqpepv" method="POST">
+                <input type="hidden" id="unitNameField" name="unit_name">
+                <input type="hidden" id="unitPriceField" name="unit_price">
+                
+                <label for="customerName">Full Name:</label>
+                <input type="text" id="customerName" name="name" required>
+                
+                <label for="customerEmail">Email:</label>
+                <input type="email" id="customerEmail" name="email" required>
+                
+                <label for="customerPhone">Phone Number:</label>
+                <input type="text" id="customerPhone" name="phone" required>
+                
+                <label for="moveInDate">Expected Move-In Date:</label>
+                <input type="date" id="moveInDate" name="move_in_date" required>
+                
+                <label for="message">Message:</label>
+                <textarea id="message" name="message" placeholder="Tell us more about your storage needs..."></textarea>
+                
+                <button type="submit" class="btn" style="width: 100%;">Send Inquiry</button>
             </form>
         </div>
     </div>
 
     <script>
-        let selectedUnitId = null;
-        const FORMSPREE_ID = 'xyzwplnw'; // Replace with your actual Formspree form ID
-
-        // Load storage units from JSON data
+        // Load units from localStorage
         function loadUnits() {
-            const unitsData = {
-                units: [
-                    {
-                        id: 1,
-                        name: "Unit 1",
-                        size: "50 x 40 ft",
-                        containerSize: "30-40 ft",
-                        features: ["Private Fence", "Access Code", "Ground Level", "Easy Loading"],
-                        status: "available",
-                        price: null,
-                        photo: null
-                    },
-                    {
-                        id: 2,
-                        name: "Unit 2",
-                        size: "50 x 40 ft",
-                        containerSize: "30-40 ft",
-                        features: ["Private Fence", "Access Code", "Ground Level", "Easy Loading"],
-                        status: "available",
-                        price: null,
-                        photo: null
-                    },
-                    {
-                        id: 3,
-                        name: "Unit 3",
-                        size: "50 x 40 ft",
-                        containerSize: "30-40 ft",
-                        features: ["Private Fence", "Access Code", "Ground Level", "Easy Loading"],
-                        status: "available",
-                        price: null,
-                        photo: null
-                    },
-                    {
-                        id: 4,
-                        name: "Unit 4",
-                        size: "50 x 40 ft",
-                        containerSize: "30-40 ft",
-                        features: ["Private Fence", "Access Code", "Ground Level", "Easy Loading"],
-                        status: "available",
-                        price: null,
-                        photo: null
-                    },
-                    {
-                        id: 5,
-                        name: "Unit 5",
-                        size: "50 x 40 ft",
-                        containerSize: "30-40 ft",
-                        features: ["Private Fence", "Access Code", "Ground Level", "Easy Loading"],
-                        status: "available",
-                        price: null,
-                        photo: null
-                    },
-                    {
-                        id: 6,
-                        name: "Unit 6",
-                        size: "50 x 40 ft",
-                        containerSize: "30-40 ft",
-                        features: ["Private Fence", "Access Code", "Ground Level", "Easy Loading"],
-                        status: "available",
-                        price: null,
-                        photo: null
-                    },
-                    {
-                        id: 7,
-                        name: "Unit 7",
-                        size: "50 x 40 ft",
-                        containerSize: "30-40 ft",
-                        features: ["Private Fence", "Access Code", "Ground Level", "Easy Loading"],
-                        status: "available",
-                        price: null,
-                        photo: null
-                    },
-                    {
-                        id: 8,
-                        name: "Unit 8",
-                        size: "50 x 40 ft",
-                        containerSize: "30-40 ft",
-                        features: ["Private Fence", "Access Code", "Ground Level", "Easy Loading"],
-                        status: "available",
-                        price: null,
-                        photo: null
-                    },
-                    {
-                        id: 9,
-                        name: "Unit 9",
-                        size: "50 x 40 ft",
-                        containerSize: "30-40 ft",
-                        features: ["Private Fence", "Access Code", "Ground Level", "Easy Loading"],
-                        status: "available",
-                        price: null,
-                        photo: null
-                    },
-                    {
-                        id: 10,
-                        name: "Unit 10",
-                        size: "50 x 40 ft",
-                        containerSize: "30-40 ft",
-                        features: ["Private Fence", "Access Code", "Ground Level", "Easy Loading"],
-                        status: "available",
-                        price: null,
-                        photo: null
-                    },
-                    {
-                        id: 11,
-                        name: "Unit 11 - Premium",
-                        size: "150 x 40 ft",
-                        containerSize: "30-40 ft",
-                        features: ["Private Fence", "Access Code", "Extra Large", "Premium Space"],
-                        status: "available",
-                        price: null,
-                        photo: null
-                    }
-                ]
-            };
+            const units = JSON.parse(localStorage.getItem('storageUnits')) || [];
+            displayUnits(units);
+            displayUnitsTable(units);
+            displayPhotoManagement(units);
+        }
 
-            // Load from localStorage if exists
-            const savedUnits = localStorage.getItem('storageUnits');
-            const units = savedUnits ? JSON.parse(savedUnits) : unitsData.units;
-
+        // Display units on main page
+        function displayUnits(units) {
             const grid = document.getElementById('unitsGrid');
             grid.innerHTML = '';
 
-            units.forEach(unit => {
+            if (units.length === 0) {
+                grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #666;">No units available yet. Add units from the admin panel.</p>';
+                return;
+            }
+
+            units.forEach((unit, index) => {
                 const card = document.createElement('div');
                 card.className = 'unit-card';
-                const imageHtml = unit.photo ? `<img src="${unit.photo}" alt="${unit.name}" class="unit-image show">` : '';
-                
                 card.innerHTML = `
-                    ${imageHtml}
-                    <h4>${unit.name}</h4>
-                    <div class="unit-specs">
-                        <div class="spec">
-                            <span class="spec-label">Unit Size:</span>
-                            <span class="spec-value">${unit.size}</span>
-                        </div>
-                        <div class="spec">
-                            <span class="spec-label">Container:</span>
-                            <span class="spec-value">${unit.containerSize}</span>
-                        </div>
+                    <div class="unit-image">
+                        ${unit.photo ? `<img src="${unit.photo}" alt="${unit.name}">` : '📦'}
                     </div>
-                    <ul class="features">
-                        ${unit.features.map(f => `<li>${f}</li>`).join('')}
-                    </ul>
-                    ${unit.price ? `<div class="price">$${unit.price}/month</div>` : '<div class="price-note">Contact for pricing</div>'}
-                    <span class="status-badge status-${unit.status}">${unit.status.charAt(0).toUpperCase() + unit.status.slice(1)}</span>
-                    <button class="inquiry-btn" onclick="openInquiry(${unit.id}, '${unit.name}')">Inquire About This Unit</button>
+                    <div class="unit-content">
+                        <h3>${unit.name}</h3>
+                        <p><strong>Size:</strong> ${unit.size}</p>
+                        <p><strong>Location:</strong> ${unit.location}</p>
+                        <p>${unit.description}</p>
+                        <div class="unit-price">$${unit.price}/month</div>
+                        <button class="inquiry-btn" onclick="openInquiryModal(${index})">Inquire About This Unit</button>
+                    </div>
                 `;
                 grid.appendChild(card);
             });
         }
 
-        function openInquiry(unitId, unitName) {
-            selectedUnitId = unitId;
-            document.getElementById('unitName').textContent = unitName;
-            document.getElementById('inquiryForm').reset();
-            document.getElementById('successMessage').style.display = 'none';
-            document.getElementById('errorMessage').style.display = 'none';
-            document.getElementById('inquiryModal').classList.add('active');
-        }
+        // Display units in admin table
+        function displayUnitsTable(units) {
+            const tbody = document.getElementById('unitsTableBody');
+            tbody.innerHTML = '';
 
-        function closeModal() {
-            document.getElementById('inquiryModal').classList.remove('active');
-            selectedUnitId = null;
-        }
-
-        function submitInquiry(event) {
-            event.preventDefault();
-
-            const fullName = document.getElementById('fullName').value;
-            const email = document.getElementById('email').value;
-            const phone = document.getElementById('phone').value;
-            const moveDate = document.getElementById('moveDate').value;
-            const message = document.getElementById('message').value;
-
-            // Get unit details
-            const units = JSON.parse(localStorage.getItem('storageUnits')) || [];
-            const unit = units.find(u => u.id === selectedUnitId);
-            const unitName = unit ? unit.name : 'Unknown Unit';
-
-            // Create FormData
-            const formData = new FormData();
-            formData.append('_subject', `New Storage Unit Inquiry - ${unitName}`);
-            formData.append('Full Name', fullName);
-            formData.append('Email', email);
-            formData.append('Phone', phone);
-            formData.append('Unit', unitName);
-            formData.append('Move-In Date', moveDate || 'Not specified');
-            formData.append('Message', message);
-
-            // Send to Formspree
-            fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => {
-                if (response.ok) {
-                    showSuccess('✓ Inquiry sent successfully! We will contact you soon.');
-                    setTimeout(() => {
-                        closeModal();
-                    }, 2500);
-                } else {
-                    showError('There was an error sending your inquiry. Please try again or call us directly.');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                showError('There was an error sending your inquiry. Please try again or call us directly.');
+            units.forEach((unit, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${unit.name}</td>
+                    <td>${unit.size}</td>
+                    <td>$${unit.price}</td>
+                    <td>${unit.location}</td>
+                    <td>
+                        <button class="btn" onclick="editUnit(${index})">Edit</button>
+                        <button class="btn btn-danger" onclick="deleteUnit(${index})">Delete</button>
+                    </td>
+                `;
+                tbody.appendChild(row);
             });
         }
 
-        function showSuccess(message) {
-            const successDiv = document.getElementById('successMessage');
-            successDiv.textContent = message;
-            successDiv.style.display = 'block';
+        // Display photo management
+        function displayPhotoManagement(units) {
+            const container = document.getElementById('photoManagement');
+            container.innerHTML = '';
+
+            units.forEach((unit, index) => {
+                const section = document.createElement('div');
+                section.style.marginBottom = '1.5rem';
+                section.innerHTML = `
+                    <h4>${unit.name}</h4>
+                    ${unit.photo ? `<img src="${unit.photo}" style="max-width: 200px; border-radius: 4px; margin: 0.5rem 0;">` : '<p style="color: #999;">No photo</p>'}
+                    <input type="file" id="photoInput${index}" accept="image/*" onchange="uploadPhoto(${index})">
+                `;
+                container.appendChild(section);
+            });
         }
 
-        function showError(message) {
-            const errorDiv = document.getElementById('errorMessage');
-            errorDiv.textContent = message;
-            errorDiv.style.display = 'block';
+        // Add new unit
+        function addUnit() {
+            const name = document.getElementById('unitName').value;
+            const size = document.getElementById('unitSize').value;
+            const price = document.getElementById('unitPrice').value;
+            const location = document.getElementById('unitLocation').value;
+            const description = document.getElementById('unitDescription').value;
+
+            if (!name || !size || !price || !location) {
+                alert('Please fill in all required fields');
+                return;
+            }
+
+            const units = JSON.parse(localStorage.getItem('storageUnits')) || [];
+            units.push({
+                name,
+                size,
+                price,
+                location,
+                description,
+                photo: null
+            });
+
+            localStorage.setItem('storageUnits', JSON.stringify(units));
+            loadUnits();
+
+            // Clear form
+            document.getElementById('unitName').value = '';
+            document.getElementById('unitSize').value = '';
+            document.getElementById('unitPrice').value = '';
+            document.getElementById('unitLocation').value = '';
+            document.getElementById('unitDescription').value = '';
+
+            alert('Unit added successfully!');
         }
 
-        // Close modal when clicking outside
-        window.onclick = function(event) {
-            const modal = document.getElementById('inquiryModal');
-            if (event.target === modal) {
-                closeModal();
+        // Edit unit
+        function editUnit(index) {
+            const units = JSON.parse(localStorage.getItem('storageUnits')) || [];
+            const unit = units[index];
+
+            const newName = prompt('Unit Name:', unit.name);
+            if (!newName) return;
+
+            const newSize = prompt('Size:', unit.size);
+            if (!newSize) return;
+
+            const newPrice = prompt('Price:', unit.price);
+            if (!newPrice) return;
+
+            units[index] = { ...unit, name: newName, size: newSize, price: newPrice };
+            localStorage.setItem('storageUnits', JSON.stringify(units));
+            loadUnits();
+            alert('Unit updated!');
+        }
+
+        // Delete unit
+        function deleteUnit(index) {
+            if (confirm('Are you sure you want to delete this unit?')) {
+                const units = JSON.parse(localStorage.getItem('storageUnits')) || [];
+                units.splice(index, 1);
+                localStorage.setItem('storageUnits', JSON.stringify(units));
+                loadUnits();
+                alert('Unit deleted!');
             }
         }
 
-        // Load units on page load
-        document.addEventListener('DOMContentLoaded', loadUnits);
+        // Upload photo
+        function uploadPhoto(index) {
+            const input = document.getElementById(`photoInput${index}`);
+            const file = input.files[0];
+
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const units = JSON.parse(localStorage.getItem('storageUnits')) || [];
+                units[index].photo = e.target.result;
+                localStorage.setItem('storageUnits', JSON.stringify(units));
+                loadUnits();
+                alert('Photo uploaded!');
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // Inquiry Modal Functions
+        function openInquiryModal(index) {
+            const units = JSON.parse(localStorage.getItem('storageUnits')) || [];
+            const unit = units[index];
+
+            document.getElementById('unitNameField').value = unit.name;
+            document.getElementById('unitPriceField').value = unit.price;
+            document.getElementById('inquiryModal').style.display = 'block';
+        }
+
+        function closeInquiryModal() {
+            document.getElementById('inquiryModal').style.display = 'none';
+            document.getElementById('inquiryForm').reset();
+        }
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('inquiryModal');
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        // Initialize
+        loadUnits();
+
+        // Sample data for first time
+        if (JSON.parse(localStorage.getItem('storageUnits')) === null) {
+            const sampleUnits = [
+                {
+                    name: 'Unit A1',
+                    size: '5x10',
+                    price: '75',
+                    location: 'Main Facility',
+                    description: 'Small unit, perfect for personal items',
+                    photo: null
+                },
+                {
+                    name: 'Unit A2',
+                    size: '10x10',
+                    price: '125',
+                    location: 'Main Facility',
+                    description: 'Medium unit, great for household items',
+                    photo: null
+                },
+                {
+                    name: 'Unit B1',
+                    size: '10x20',
+                    price: '225',
+                    location: 'Expansion Facility',
+                    description: 'Large unit, ideal for furniture and more',
+                    photo: null
+                }
+            ];
+            localStorage.setItem('storageUnits', JSON.stringify(sampleUnits));
+            loadUnits();
+        }
     </script>
 </body>
 </html>
